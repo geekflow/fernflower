@@ -988,7 +988,7 @@ public class ClassWriter {
 
   private static final Map<Integer, String> MODIFIERS;
   static {
-    MODIFIERS = new LinkedHashMap<>();
+    MODIFIERS = new LinkedHashMap<Integer, String>();
     MODIFIERS.put(CodeConstants.ACC_PUBLIC, "public");
     MODIFIERS.put(CodeConstants.ACC_PROTECTED, "protected");
     MODIFIERS.put(CodeConstants.ACC_PRIVATE, "private");
