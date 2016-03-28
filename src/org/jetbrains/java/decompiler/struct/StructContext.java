@@ -74,6 +74,24 @@ public class StructContext {
     }
   }
 
+  public void addSpaceForLight(String path, String fileName, boolean isOwn) throws IOException {
+    ContextUnit unit = units.get(path);
+    if (unit == null) {
+      unit = new ContextUnit(ContextUnit.TYPE_FOLDER, null, path, isOwn, saver, decompiledData);
+      units.put(path, unit);
+    }
+
+    DataInputFullStream in = loader.getClassStream(fileName, null);
+    try {
+      StructClass cl = new StructClass(in, isOwn, loader);
+      classes.put(cl.qualifiedName, cl);
+      unit.addClass(cl, fileName);
+      loader.addClassLink(cl.qualifiedName, new LazyLoader.Link(LazyLoader.Link.CLASS, fileName, null));
+    } finally {
+      in.close();
+    }
+  }
+
   public void addSpace(File file, boolean isOwn) {
     addSpace("", file, isOwn, 0);
   }
